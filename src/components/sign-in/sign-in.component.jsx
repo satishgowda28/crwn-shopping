@@ -1,12 +1,14 @@
 import React from 'react';
 import './sign-in.style.scss';
 
+import {auth, createUserProfileDocument} from '../../firebase/firebase.utils';
+
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
 import {signinWithGoogle} from '../../firebase/firebase.utils';
 
-export default class SingIn extends React.Component {
+export default class SignIn extends React.Component {
   constructor(props) {
     super(props);
 
@@ -16,14 +18,20 @@ export default class SingIn extends React.Component {
     }
   }
 
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault();
-    this.setState({emai: '', password: ''});
+    const {email, password} = this.state;
+    try {
+      const {user} = await auth.signInWithEmailAndPassword(email, password);
+      await createUserProfileDocument(user);
+    } catch(error) {
+      console.log(error.message, 'Something went wrong while loggin in');
+    }
+    this.setState({email: '', password: ''});
   }
 
   handlOnChange = e => {
     const {value, name} = e.target;
-
     this.setState({[name]: value});
   }
 
