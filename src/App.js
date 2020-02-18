@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {setCurrentUser} from './redux/user/user.action'
