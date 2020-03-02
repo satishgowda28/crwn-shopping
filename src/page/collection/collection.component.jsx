@@ -6,6 +6,7 @@ import CollectionItem from '../../components/collection-item/collection-item.com
 import './collection.style.scss';
 
 const CollectionPage = ({collectionData}) => {
+  console.log('im mounting');
   const {title, items} = collectionData;
   return (
   <div className="collection-page">
