@@ -2,7 +2,7 @@ import React from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
-import {setCurrentUser} from './redux/user/user.action'
+import {setCurrentUser, checkuserSession} from './redux/user/user.action'
 import {selectCurrentUser} from './redux/user/user.selectors'
 import {auth, createUserProfileDocument/* , addCollectionAndDocuments */} from './firebase/firebase.utils';
 /* import {collArraySelector} from './redux/shop/shop.selectors'; */
@@ -24,6 +24,8 @@ class App extends React.Component{
   unsubscribeFromAuth = null
 
   componentDidMount() {
+    const {checkuserSession} = this.props;
+    checkuserSession();
     // const {setCurrentUser/* , collectionArray */} = this.props;
     // this.authSubscriber = auth.onAuthStateChanged(async userAuth => {
     //   console.log(userAuth)
@@ -67,6 +69,7 @@ const mapStateToProps = createStructuredSelector({
   /* collectionArray: collArraySelector */
 })
 const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user))
+  setCurrentUser: user => dispatch(setCurrentUser(user)),
+  checkuserSession: () => dispatch(checkuserSession())
 });
 export default connect(mapStateToProps, mapDispatchToProps)(App);

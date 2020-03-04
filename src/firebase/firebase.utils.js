@@ -60,7 +60,6 @@ export const addCollectionAndDocuments = async (collectionKey, objectToAdd) => {
 export const convertCollectionSnapshotToMap = (collectionSnapshot) => {
   const transformedCollection = collectionSnapshot.docs.map(doc => {
     const {title, items} = doc.data();
-
     return {
       id: doc.id,
       routeName: encodeURI(title.toLowerCase()),
@@ -72,6 +71,16 @@ export const convertCollectionSnapshotToMap = (collectionSnapshot) => {
     accumulator[collection.title.toLowerCase()] = collection;
     return accumulator;
   },{});
+}
+
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged(userAuth => {
+      console.log(userAuth)
+      unsubscribe();
+      resolve(userAuth);
+    },reject);
+  })
 }
 
 export default firebase;
